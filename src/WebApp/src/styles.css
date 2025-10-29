@@ -1,0 +1,247 @@
+:root {
+  font-family: 'Inter', system-ui, sans-serif;
+  line-height: 1.5;
+  color: #1f2933;
+  background-color: #f5f7fa;
+}
+
+body {
+  margin: 0;
+  background-color: #f5f7fa;
+}
+
+main.container {
+  margin: 0 auto;
+  max-width: 960px;
+  padding: 2rem 1.5rem 3rem;
+}
+
+header {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+header h1 {
+  font-size: 2rem;
+  margin-bottom: 0.5rem;
+}
+
+header.page-header {
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 1.5rem;
+}
+
+@media (min-width: 768px) {
+  header.page-header {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+  }
+}
+
+.layout {
+  display: grid;
+  gap: 1.5rem;
+}
+
+@media (min-width: 960px) {
+  .layout {
+    grid-template-columns: 1fr 1.2fr;
+    align-items: start;
+  }
+}
+
+.card {
+  background-color: #ffffff;
+  border-radius: 12px;
+  padding: 1.5rem;
+  box-shadow: 0 10px 25px rgba(15, 23, 42, 0.08);
+  display: grid;
+  gap: 1rem;
+}
+
+.form {
+  display: grid;
+  gap: 1rem;
+}
+
+.card label {
+  display: grid;
+  gap: 0.35rem;
+  font-weight: 600;
+  color: #334155;
+}
+
+.card input {
+  border-radius: 8px;
+  border: 1px solid #cbd5f5;
+  padding: 0.6rem 0.8rem;
+  font-size: 0.95rem;
+}
+
+.card input[aria-invalid='true'] {
+  border-color: #e11d48;
+}
+
+.card span[role='alert'] {
+  color: #e11d48;
+  font-size: 0.85rem;
+}
+
+.card button {
+  border: none;
+  border-radius: 8px;
+  padding: 0.75rem 1.25rem;
+  background: linear-gradient(135deg, #312e81, #6366f1);
+  color: #fff;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.card button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.card button:not(:disabled):hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 16px rgba(79, 70, 229, 0.25);
+}
+
+button.secondary {
+  background: linear-gradient(135deg, #e0e7ff, #c7d2fe);
+  color: #312e81;
+}
+
+button.secondary:hover {
+  box-shadow: none;
+  transform: translateY(-1px);
+}
+
+.link-button {
+  background: none !important;
+  border: none !important;
+  color: #4338ca;
+  text-decoration: underline;
+  font-weight: 600;
+  cursor: pointer;
+  padding: 0;
+}
+
+.link-button:hover {
+  color: #312e81;
+}
+
+.error-message {
+  background-color: #fef2f2;
+  border-left: 4px solid #b91c1c;
+  padding: 0.75rem 1rem;
+  border-radius: 10px;
+  color: #b91c1c;
+  text-align: left;
+}
+
+.muted {
+  color: #64748b;
+  font-size: 0.9rem;
+}
+
+.auth-container {
+  display: flex;
+  justify-content: center;
+  padding: 4rem 1rem 3rem;
+}
+
+.auth-card {
+  width: min(420px, 100%);
+  text-align: center;
+  gap: 1.25rem;
+}
+
+.auth-card header {
+  margin-bottom: 0;
+}
+
+.auth-card .form-field {
+  display: grid;
+  gap: 0.5rem;
+  text-align: left;
+}
+
+.session-card {
+  background-color: #ffffff;
+  border-radius: 12px;
+  padding: 1rem 1.25rem;
+  box-shadow: 0 8px 20px rgba(15, 23, 42, 0.1);
+  display: grid;
+  gap: 0.35rem;
+  align-items: start;
+  justify-items: start;
+  min-width: 220px;
+}
+
+.session-card span {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: #64748b;
+}
+
+.session-card strong {
+  font-size: 0.95rem;
+  color: #1f2933;
+}
+
+.session-card button {
+  margin-top: 0.25rem;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: #fff;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 10px 25px rgba(15, 23, 42, 0.08);
+}
+
+thead {
+  background: linear-gradient(135deg, #1e1b4b, #4338ca);
+  color: #f8fafc;
+}
+
+thead th {
+  text-align: left;
+  padding: 0.85rem 1rem;
+  font-size: 0.9rem;
+  letter-spacing: 0.05em;
+}
+
+tbody td {
+  padding: 0.85rem 1rem;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+tbody tr:last-child td {
+  border-bottom: none;
+}
+
+tbody tr:hover {
+  background-color: #eef2ff;
+}
+
+p[role='status'],
+p[role='alert'] {
+  background-color: #fff;
+  padding: 1rem;
+  border-radius: 12px;
+  box-shadow: 0 10px 25px rgba(15, 23, 42, 0.08);
+}
+
+p[role='alert'] {
+  border-left: 4px solid #e11d48;
+}

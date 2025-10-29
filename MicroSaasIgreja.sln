@@ -1,0 +1,45 @@
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MicroSaas.Api", "src/Api/MicroSaas.Api.csproj", "{BA7D8E1A-3E8C-4BB4-9D7E-9DA9F3E1AB3B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MicroSaas.Application", "src/Application/MicroSaas.Application.csproj", "{11E8502B-64E6-4BA3-995B-3E19E070D22F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MicroSaas.Domain", "src/Domain/MicroSaas.Domain.csproj", "{4BE300E7-930D-4BB8-8366-565B1D171CC4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MicroSaas.Infrastructure", "src/Infrastructure/MicroSaas.Infrastructure.csproj", "{7D39137D-6E8F-4B75-86A3-0185A34B13C3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MicroSaas.Api.Tests", "tests/Api.Tests/MicroSaas.Api.Tests.csproj", "{87B63EB1-7B49-43C3-B65C-0630F0495477}"
+EndProject
+Global
+GlobalSection(SolutionConfigurationPlatforms) = preSolution
+Debug|Any CPU = Debug|Any CPU
+Release|Any CPU = Release|Any CPU
+EndGlobalSection
+GlobalSection(ProjectConfigurationPlatforms) = postSolution
+{BA7D8E1A-3E8C-4BB4-9D7E-9DA9F3E1AB3B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+{BA7D8E1A-3E8C-4BB4-9D7E-9DA9F3E1AB3B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+{BA7D8E1A-3E8C-4BB4-9D7E-9DA9F3E1AB3B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+{BA7D8E1A-3E8C-4BB4-9D7E-9DA9F3E1AB3B}.Release|Any CPU.Build.0 = Release|Any CPU
+{11E8502B-64E6-4BA3-995B-3E19E070D22F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+{11E8502B-64E6-4BA3-995B-3E19E070D22F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+{11E8502B-64E6-4BA3-995B-3E19E070D22F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+{11E8502B-64E6-4BA3-995B-3E19E070D22F}.Release|Any CPU.Build.0 = Release|Any CPU
+{4BE300E7-930D-4BB8-8366-565B1D171CC4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+{4BE300E7-930D-4BB8-8366-565B1D171CC4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+{4BE300E7-930D-4BB8-8366-565B1D171CC4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+{4BE300E7-930D-4BB8-8366-565B1D171CC4}.Release|Any CPU.Build.0 = Release|Any CPU
+{7D39137D-6E8F-4B75-86A3-0185A34B13C3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+{7D39137D-6E8F-4B75-86A3-0185A34B13C3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+{7D39137D-6E8F-4B75-86A3-0185A34B13C3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+{7D39137D-6E8F-4B75-86A3-0185A34B13C3}.Release|Any CPU.Build.0 = Release|Any CPU
+{87B63EB1-7B49-43C3-B65C-0630F0495477}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+{87B63EB1-7B49-43C3-B65C-0630F0495477}.Debug|Any CPU.Build.0 = Debug|Any CPU
+{87B63EB1-7B49-43C3-B65C-0630F0495477}.Release|Any CPU.ActiveCfg = Release|Any CPU
+{87B63EB1-7B49-43C3-B65C-0630F0495477}.Release|Any CPU.Build.0 = Release|Any CPU
+EndGlobalSection
+GlobalSection(SolutionProperties) = preSolution
+HideSolutionNode = FALSE
+EndGlobalSection
+EndGlobal
