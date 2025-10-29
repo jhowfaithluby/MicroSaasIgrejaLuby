@@ -5,7 +5,7 @@ Este documento reúne as instruções oficiais para criar e evoluir o projeto **
 ## 1. Visão Geral da Solução
 - **Back-end:** ASP.NET Core 8 minimal APIs ou controllers tradicionais, seguindo os princípios de Clean Architecture (Camadas Domain → Application → Infrastructure → Presentation).
 - **Front-end:** React 18 com TypeScript, componentização reutilizável, design system compartilhado e atenção a acessibilidade (WCAG 2.1) e UX.
-- **Banco de Dados:** SQL Server LocalDB (ou Docker local) via Entity Framework Core 8 com Migrations versionadas. O banco permanecerá local até nova instrução.
+- **Banco de Dados:** SQLite por padrão via Entity Framework Core 8 com migrations opcionais. É possível alternar para SQL Server ajustando `Database:Provider` para `SqlServer` e atualizando a connection string. As tabelas incluem ASP.NET Core Identity e controle de refresh tokens.
 - **Comunicação:** RESTful APIs com versionamento (ex.: `/api/v1/...`). Documentação automática com Swagger/Swashbuckle.
 
 ## 2. Estrutura de Pastas Recomendada
@@ -28,7 +28,7 @@ Este documento reúne as instruções oficiais para criar e evoluir o projeto **
 3. `dotnet new classlib -n MicroSaas.Application`
 4. `dotnet new classlib -n MicroSaas.Infrastructure`
 5. Referenciar projetos conforme dependências (Api → Application → Domain, Application ↔ Domain, Infrastructure → Domain).
-6. Configurar **Entity Framework Core 8** com **DbContext** no projeto Infrastructure.
+6. Configurar **Entity Framework Core 8** com **DbContext** no projeto Infrastructure utilizando **SQLite** (`UseSqlite`) ou **SQL Server** (`UseSqlServer`) conforme o `Database:Provider` definido.
 7. Criar migrations e aplicar no banco local:
    ```bash
    dotnet ef migrations add InitialCreate -p src/Infrastructure -s src/Api
@@ -45,17 +45,18 @@ Este documento reúne as instruções oficiais para criar e evoluir o projeto **
 - Centralizar exceções via middleware de tratamento e retorno padronizado (RFC 7807 - ProblemDetails).
 
 ### 3.2. Segurança e Autenticação
-- Implementar **JWT Bearer** com refresh tokens e políticas de autorização.
+- Implementar **JWT Bearer** com refresh tokens e políticas de autorização (`/api/v1/auth/login`, `/api/v1/auth/refresh`, `/api/v1/auth/logout`).
 - Integrar **ASP.NET Core Identity** com hashing seguro (PBKDF2/Argon2) e MFA opcional.
-- Aplicar políticas CORS restritivas, rate limiting e `Content-Security-Policy`.
+- Aplicar políticas CORS restritivas, rate limiting e `Content-Security-Policy` (já configurados no `Program.cs`).
 - Validar dados sensíveis, usar Secrets Manager para credenciais e proteger connection strings.
-- Realizar varreduras OWASP (ex.: ZAP) e configurar headers de segurança (HSTS, X-Content-Type-Options, X-Frame-Options).
+- Realizar varreduras OWASP (ex.: ZAP) e configurar headers de segurança (HSTS, X-Content-Type-Options, X-Frame-Options) — já aplicados globalmente.
 
 ### 3.3. Observabilidade e Logs
 - Utilizar **Serilog** com sinks para arquivo local (`logs/`) e console.
 - Padronizar correlação de requisições com `Activity`/`TraceId`.
-- Integrar **OpenTelemetry** para métricas e tracing (exporter OTLP pronto para upgrade futuro).
+- Integrar **OpenTelemetry** para métricas e tracing (Console exporter habilitado por padrão, pronto para OTLP).
 - Monitorar saúde com `/health` utilizando **AspNetCore.HealthChecks** (checagens de banco, storage, fila).
+- Habilitar rate limiting e métricas de tráfego para proteção adicional (já incluso no template).
 
 ## 4. Criação do Front-end React
 1. `npx create-react-app webapp --template typescript` ou usar Vite (`npm create vite@latest webapp -- --template react-ts`).
@@ -107,7 +108,56 @@ Este documento reúne as instruções oficiais para criar e evoluir o projeto **
 - [ ] Instalar SDK .NET 8 e Node.js LTS.
 - [ ] Configurar ferramentas de qualidade (ESLint, Stylelint, Analyzer Roslyn, SonarQube).
 - [ ] Inicializar repositório git com `.editorconfig`, `.gitignore` e templates de PR/Issues.
-- [ ] Configurar Secrets (User Secrets no back-end e `.env.local` no front).
+- [ ] Configurar Secrets (User Secrets no back-end e `.env.local` no front). **Defina `Jwt:SigningKey` com uma chave forte e única.**
 - [ ] Definir estratégia de versionamento semântico e branch naming convention.
 
 > **Revisão Contínua:** Reavalie este guia periodicamente para incluir novas práticas, tecnologias e requisitos de negócio. Atualize instruções sempre que surgirem mudanças significativas (ex.: alteração do banco para cloud, novos mecanismos de segurança, padrões de logging ou ferramentas de monitoramento).
+
+## Como executar o projeto criado
+
+### Requisitos
+
+- .NET SDK 8.0
+- Node.js 20 LTS
+- SQLite (habilitado por padrão) ou SQL Server LocalDB/instância SQL Server (Docker/Local) caso altere `Database:Provider` para `SqlServer` e ajuste `ConnectionStrings:Default`
+
+### API (.NET)
+
+```bash
+dotnet restore MicroSaasIgreja.sln
+dotnet ef database update -p src/Infrastructure -s src/Api
+dotnet run --project src/Api/MicroSaas.Api.csproj
+```
+
+> ⚠️ Ajuste `Jwt:SigningKey` em `src/Api/appsettings.json` ou utilize _user secrets_/variáveis de ambiente antes de subir a API em produção.
+
+Endpoints principais:
+
+- `POST http://localhost:5000/api/v1/auth/register`
+- `POST http://localhost:5000/api/v1/auth/login`
+- `POST http://localhost:5000/api/v1/auth/refresh`
+- `POST http://localhost:5000/api/v1/auth/logout`
+- `POST http://localhost:5000/api/v1/members` (requer Bearer Token)
+- `GET http://localhost:5000/api/v1/members` (requer Bearer Token)
+- `GET http://localhost:5000/health`
+- Swagger UI em `http://localhost:5000/swagger`
+
+### Front-end (React)
+
+```bash
+cd src/WebApp
+npm install
+npm run dev
+```
+
+Copie `src/WebApp/.env.example` para `src/WebApp/.env.local` (ou configure variáveis de ambiente equivalentes) e ajuste `VITE_API_URL` para apontar para a API.
+
+Aplicação disponível em `http://localhost:5173` consumindo a API. Faça login com o usuário administrador seed (padrão `admin@microsaasigreja.local` / `Admin@12345`) ou registre um novo usuário para obter tokens JWT.
+
+### Testes
+
+```bash
+dotnet test MicroSaasIgreja.sln
+cd src/WebApp
+npm test
+```
